@@ -4,13 +4,13 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       Boot Sector: 512 Bytes
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-[org 0x7C00]
-[bits 16]
-section .data          ; for constant variables such as strings, placed at the end of file
-section .bss           ; for mutatable variables
-section .text          ; the entry point
-    global main
+;[ORG 0x7C00]
+[BITS 16]
 
+;section .data          ; for constant variables such as strings, placed at the end of file
+;section .bss           ; for mutatable variables
+section .text        ; the entry point
+    global main
 
 main:
     cli                                 ; clear interrupts while changing segment registers
@@ -271,6 +271,7 @@ times 510-($-$$) db 0
 ; Ending the boot sector with the magic number, 0x55AA
 db 0x55, 0xAA
 
+
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                       2nd Sector
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -349,7 +350,7 @@ PhysicalAddressExtension_Paging:
     ; Long Jump
     jmp GDT_Code:PhysicalAddressExtension_LongMode
     sti
-    %include "./gdt.asm"
+    %include "./bootloader.gdt.asm"
     [bits 64]
     PhysicalAddressExtension_LongMode:
     VID_MEM equ 0xb8000
